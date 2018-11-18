@@ -7,10 +7,10 @@ class Sudoku:
     def __init__(self, sudoku = None):
         self.sudoku = sudoku
         if self.sudoku is None or type(self.sudoku) is not np.ndarray or self.sudoku.shape[0] != 9 or self.sudoku.shape[1] != 9:
-            print("Creando sudoku en blanco")
+            #print("Creando sudoku en blanco")
             self.sudoku = np.zeros((9,9))
-        else:
-            print("Usando sudoku suministrado")
+        #else:
+            #print("Usando sudoku suministrado")
         self.candidatos = []
         self.resuelto = False
         self.valido = self.validarCandidatos()
@@ -138,11 +138,11 @@ class Sudoku:
         for i in range(9):
             #obtengo indices de candidatos
             idxCandidatosCuadrante = self.obtenerCandidatosCuadrante(i)
-            print("************************************")
-            print("candidatos de 8,8")
-            for idx in idxCandidatosCuadrante:
-                print(self.candidatos[idx])
-            print("************************************")
+            #print("************************************")
+            #print("candidatos de 8,8")
+            #for idx in idxCandidatosCuadrante:
+            #    print(self.candidatos[idx])
+            #print("************************************")
             #exit()
             for idx in idxCandidatosCuadrante:
 
@@ -176,7 +176,7 @@ class Sudoku:
         self.sudoku [ self.historialMovimientos[ self.movActual] [0] ][ self.historialMovimientos[ self.movActual] [1] ] = 0
         self.movActual = self.movActual - 1
         self.validarSudoku()
-        print("deshacer {}".format(self.movActual))
+        #print("deshacer {}".format(self.movActual))
         
 
     def rehacer(self):
@@ -192,9 +192,9 @@ class Sudoku:
     def completar(self):
         self.calcularCandidatos()
         
-        print("inicio")
+        #print("inicio")
         if not self.valido:
-            print("sudoku no valido")
+        #    print("sudoku no valido")
             return
         #print("candidatos {}".format(self.candidatos[(len(self.candidatos)-1)]))
 
@@ -203,10 +203,10 @@ class Sudoku:
         cont = 0
         duda = []
         while not self.resuelto:
-            print("movimiento actual {}".format(self.movActual))
-            print(self.sudoku)
+            #print("movimiento actual {}".format(self.movActual))
+            #print(self.sudoku)
             if not self.valido:
-                print("duda {}".format(duda))
+                #print("duda {}".format(duda))
                 while duda[-1] <= self.movActual:
                     self.deshacer()
                 duda.pop()
@@ -226,7 +226,7 @@ class Sudoku:
             #print(len(candidato[2]))
             #print("len(self.historialMovimientos) > self.movActual {} > {}".format(len(self.historialMovimientos), self.movActual))
             if(len(self.historialMovimientos) > self.movActual +1):
-                print("eligiendo un nuevo candidato {}".format(candidato[2]))
+                #print("eligiendo un nuevo candidato {}".format(candidato[2]))
                 #cand = self.obtenerCandidatos(self.historialMovimientos[self.movActual+1][0], self.historialMovimientos[self.movActual+1][1])
                 #indx, = np.where(cand == self.historialMovimientos[self.movActual+1][2])
                 #indx, = np.where(cand == 6)
@@ -261,110 +261,4 @@ class Sudoku:
             cont = cont + 1
         print("fin")
 
-
-
-"""s      = [9,1,0,0,3,0,0,0,0]
-s.append([0,0,0,0,0,4,0,0,0])
-s.append([0,0,8,0,0,0,5,0,1])
-s.append([0,0,0,0,0,0,4,0,6])
-s.append([0,0,0,0,0,0,4,0,6])"""
-sudoku = Sudoku()
-sudoku.insertarNumero(0,0,9)
-sudoku.insertarNumero(0,1,1)
-sudoku.insertarNumero(0,4,3)
-
-sudoku.insertarNumero(1,5,4)
-
-sudoku.insertarNumero(2,2,8)
-sudoku.insertarNumero(2,6,5)
-sudoku.insertarNumero(2,8,1)
-
-sudoku.insertarNumero(3,6,4)
-sudoku.insertarNumero(3,8,6)
-
-sudoku.insertarNumero(4,1,7)
-sudoku.insertarNumero(4,7,9)
-
-sudoku.insertarNumero(5,5,8)
-sudoku.insertarNumero(5,6,7)
-sudoku.insertarNumero(5,7,5)
-
-sudoku.insertarNumero(6,0,7)
-sudoku.insertarNumero(6,2,5)
-sudoku.insertarNumero(6,6,6)
-
-sudoku.insertarNumero(7,1,3)
-sudoku.insertarNumero(7,4,8)
-sudoku.insertarNumero(7,7,7)
-sudoku.insertarNumero(7,8,9)
-
-sudoku.insertarNumero(8,2,2)
-sudoku.insertarNumero(8,3,1)
-sudoku.insertarNumero(8,5,6)
-
-print("candidatos 8,8: {}".format(sudoku.obtenerCandidatos(8,8)))
-sudoku.obtenerUnicoEnCuadrantes()
-for candidato in sudoku.candidatos:
-    if candidato[0] == 8 and candidato[1] == 8:
-        print("candidatos 8,8 {}".format(candidato[2]))
-exit()
-
-sudoku.obtenerUnicoEnCuadrantes()
-for candidato in sudoku.candidatos:
-    if candidato[0] == 8 and candidato[1] == 8:
-        print("candidato[2] {}".format(candidato[2]))
-exit()
-
-#noveno cuadrante
-#print(sudoku.candidatos)
-#exit()
-#for i in range(6,9):
-#    for j in range(6,9):
-#        print(sudoku.obtenerCandidatos(i,j))
-
-#print(sudoku.sudoku)
-#print(sudoku.candidatos)
-#exit()
-
-
-sudoku.completar()
-print("sudoku resuelto \n{}\n numero de movimientos {}".format(sudoku.sudoku, len(sudoku.historialMovimientos)))
-exit()
-#print("mov actual {} ".format(sudoku.movActual))
-sudoku.insertarNumero(0,0,1)
-
-#print("mov actual {} ".format(sudoku.movActual))
-#exit()
-sudoku.insertarNumero(0,1,2)
-sudoku.insertarNumero(0,2,3)
-sudoku.insertarNumero(1,0,4)
-"""sudoku.insertarNumero(1,1,5)
-sudoku.insertarNumero(1,2,6)
-sudoku.insertarNumero(2,0,7)
-sudoku.insertarNumero(2,1,8)
-sudoku.insertarNumero(2,2,9)"""
-#print("historial de movimientos {}".format(sudoku.historialMovimientos))
-#sudoku.deshacer()
-#print("mov actual {} ".format(sudoku.movActual))
-#print("historial de movimientos {}".format(sudoku.historialMovimientos))
-#exit()
-print("sudoku inicial \n{} movimiento {}".format(sudoku.sudoku, sudoku.movActual))
-sudoku.deshacer()
-sudoku.deshacer()
-
-sudoku.deshacer()
-sudoku.deshacer()
-sudoku.rehacer()
-sudoku.rehacer()
-sudoku.rehacer()
-sudoku.rehacer()
-print("sudoku final \n{} movimiento {}".format(sudoku.sudoku, sudoku.movActual))
-exit()
-#sudoku.insertarNumero(2,2,9)
-sudoku.insertarNumero(8,2,9)
-print("sudoku.resuelto {}".format(sudoku.resuelto))
-print("sudoku.valido {}".format(sudoku.valido))
-
-print("historial {}".format(sudoku.historialMovimientos))
-#print("candidatos {}".format(sudoku.candidatos))
 
