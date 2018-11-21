@@ -12,6 +12,7 @@ class Sudoku:
         #else:
             #print("Usando sudoku suministrado")
         self.candidatos = []
+        self.candidatosDescartados = []
         self.resuelto = False
         self.valido = self.validarCandidatos()
         self.historialMovimientos = []
@@ -93,9 +94,14 @@ class Sudoku:
             for j in range(9):
                 if self.sudoku[i][j] == 0:
                     arr = [i,j]
-                    arr.append(self.obtenerCandidatos(i,j))
+                    candidatos = self.obtenerCandidatos(i,j)
+                    for descartado in self.candidatosDescartados:
+                        if descartado[0] == i and descartado[1] == j:
+                            idx, = np.where(candidatos == descartado[2])
+                            np.delete(candidatos,idx)
+                    arr.append(candidatos)
                     self.candidatos.append(arr)
-        self.obtenerUnicoEnCuadrantes()
+        #self.obtenerUnicoEnCuadrantes()
         self.candidatos = sorted(self.candidatos, key=lambda x:x[2].size, reverse=False)
 
     def obtenerCandidatosCuadrante(self,i):
